@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 public class PersonRepositories {
 
-    private LinkedHashMap<Long, Person> personList;
+    private static LinkedHashMap<Long, Person> personList;
 
     @Autowired
     public PersonRepositories() {
@@ -54,6 +54,10 @@ public class PersonRepositories {
 
     private Long getLastKey(){
         int count = 1;
+
+        if(personList.size() == 0){
+            return 0L;
+        }
 
         for (Map.Entry<Long, Person> pl : personList.entrySet()) {
 
