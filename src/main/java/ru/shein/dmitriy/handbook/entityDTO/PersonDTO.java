@@ -1,15 +1,18 @@
-package ru.shein.dmitriy.handbook.entity;
+package ru.shein.dmitriy.handbook.entityDTO;
 
 import lombok.Data;
 
 @Data
-public class Person {
+public class PersonDTO {
 
-    public Person(String title, String phone, String address) {
+    public PersonDTO(Long id, String title, String phone, String address) {
+        this.id = id;
         this.title = title;
         this.phone = phone;
         this.address = address;
     }
+
+    private Long id;
 
     private String title;
 
