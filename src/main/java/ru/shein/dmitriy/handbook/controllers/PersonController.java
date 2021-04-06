@@ -11,7 +11,7 @@ import ru.shein.dmitriy.handbook.service.PersonService;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/person")
 public class PersonController {
 
     private PersonService personService;
@@ -21,15 +21,38 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @PostMapping(value = "/person")
+    @PostMapping
     public ResponseEntity<PersonDTO> addPerson(@RequestBody final Person person){
 //        personService.addPerson(person);
         return new ResponseEntity<PersonDTO>(personService.addPerson(person), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/person")
+    @GetMapping
     public ResponseEntity<List<PersonDTO>> getAllPerson(){
         return new ResponseEntity<List<PersonDTO>>( personService.getAllPerson(), HttpStatus.OK);
     }
+
+    @GetMapping(value = "{id}")
+    public ResponseEntity<PersonDTO> getPerson(@PathVariable final Long id){
+        return new ResponseEntity<PersonDTO>(personService.getPerson(id), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "{id}")
+    public ResponseEntity updatePerson(@RequestBody final Person person, @PathVariable final Long id){
+        personService.updatePerson(person, id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity deletePerson(@PathVariable final Long id){
+        personService.deletePerson(id);
+        return new ResponseEntity( HttpStatus.OK);
+    }
+
+//    @GetMapping(value = "person")
+//    public ResponseEntity<PersonDTO> getQueryPerson(@RequestParam(value = "query") String query ){
+////        personService.deletePerson(id);
+//        return new ResponseEntity( HttpStatus.OK);
+//    }
 
 }

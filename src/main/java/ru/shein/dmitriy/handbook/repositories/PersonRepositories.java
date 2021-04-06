@@ -30,8 +30,10 @@ public class PersonRepositories {
         personList.put(3L, person3);
     }
 
-    public Person getPerson(Long id){
-        return personList.get(id);
+    public PersonDTO getPerson(Long id){
+        PersonDTO personDTO = PersonDTO.from(personList.get(id));
+        personDTO.setId(id);
+        return personDTO;
     }
 
     public List<PersonDTO> getAllPerson(){
@@ -56,12 +58,8 @@ public class PersonRepositories {
         return personDTO;
     }
 
-    public void setPerson(PersonDTO personDTO){
-        Person person = personList.get(personDTO.getId());
-        person.setTitle(personDTO.getTitle());
-        person.setAddress(personDTO.getAddress());
-        person.setPhone(personDTO.getPhone());
-        personList.put(personDTO.getId(), person);
+    public void setPerson(Person person, Long id){
+        personList.put(id, person);
     }
 
     public void delete(Long id){

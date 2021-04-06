@@ -29,17 +29,16 @@ public class PersonService {
         return personRepositories.getAllPerson();
     }
 
-    public Person getPerson(Long id){
+    public PersonDTO getPerson(Long id){
         return personRepositories.getPerson(id);
     }
 
     public void deletePerson(Long id){
-        Person person = getPerson(id);
+        PersonDTO person = getPerson(id);
         personRepositories.delete(id);
     }
 
-    public void updatePerson(PersonDTO personDTO){
-        Person person = getPerson(personDTO.getId());
-        personRepositories.setPerson(personDTO);
+    public void updatePerson(Person person, Long id){
+        personRepositories.setPerson(person, id);
     }
 }
