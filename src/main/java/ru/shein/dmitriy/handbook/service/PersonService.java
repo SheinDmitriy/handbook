@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.shein.dmitriy.handbook.entity.Person;
-import ru.shein.dmitriy.handbook.entityDTO.PersonDTO;
+import ru.shein.dmitriy.handbook.dto.PersonDTO;
 import ru.shein.dmitriy.handbook.repositories.PersonRepositories;
 
 import java.util.List;
@@ -20,14 +20,13 @@ public class PersonService {
         this.personRepositories = personRepositories;
     }
 
-    public void addPerson(Person person){
-         personRepositories.addPerson(person);
+    public PersonDTO addPerson(Person person){
+         return personRepositories.addPerson(person);
     }
 
     public List<PersonDTO> getAllPerson(){
 
-
-        return null;
+        return personRepositories.getAllPerson();
     }
 
     public Person getPerson(Long id){

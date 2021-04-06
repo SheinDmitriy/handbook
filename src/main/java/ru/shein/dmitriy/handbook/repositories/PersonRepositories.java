@@ -4,9 +4,11 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.shein.dmitriy.handbook.entity.Person;
-import ru.shein.dmitriy.handbook.entityDTO.PersonDTO;
+import ru.shein.dmitriy.handbook.dto.PersonDTO;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -32,12 +34,26 @@ public class PersonRepositories {
         return personList.get(id);
     }
 
-    public LinkedHashMap<Long,Person> getAllPerson(){
-        return personList;
+    public List<PersonDTO> getAllPerson(){
+        List<PersonDTO> persons = new ArrayList<PersonDTO>();
+
+        for (Map.Entry<Long, Person> pl : personList.entrySet()) {
+
+            PersonDTO personDTO = PersonDTO.from(pl.getValue());
+            personDTO.setId(pl.getKey());
+            persons.add(personDTO);
+        }
+
+        return persons;
     }
 
-    public void addPerson(Person person){
-        personList.put(getLastKey() + 1L, person);
+    public PersonDTO addPerson(Person person){
+        Long key = getLastKey() + 1L;
+        personList.put(key, person);
+        PersonDTO personDTO = PersonDTO.from(person);
+        personDTO.setId(key);
+
+        return personDTO;
     }
 
     public void setPerson(PersonDTO personDTO){
