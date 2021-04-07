@@ -2,7 +2,6 @@ package ru.shein.dmitriy.handbook.service;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.shein.dmitriy.handbook.entity.Person;
 import ru.shein.dmitriy.handbook.dto.PersonDTO;
@@ -15,8 +14,6 @@ import java.util.regex.Pattern;
 @Service
 @Data
 public class PersonService {
-
-
 
     private PersonRepositories personRepositories;
 
@@ -39,7 +36,6 @@ public class PersonService {
     }
 
     public void deletePerson(Long id){
-        PersonDTO person = getPerson(id);
         personRepositories.delete(id);
     }
 

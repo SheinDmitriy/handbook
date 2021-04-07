@@ -26,7 +26,6 @@ public class PersonDTO {
 
     public static PersonDTO from(Person person){
 
-
         PersonDTO personDTO = new PersonDTO();
         personDTO.setAddress(person.getAddress());
         personDTO.setPhone(person.getPhone());
