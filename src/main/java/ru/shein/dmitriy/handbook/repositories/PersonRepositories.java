@@ -2,6 +2,7 @@ package ru.shein.dmitriy.handbook.repositories;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import ru.shein.dmitriy.handbook.entity.Person;
 import ru.shein.dmitriy.handbook.dto.PersonDTO;
@@ -14,6 +15,9 @@ import java.util.Map;
 @Repository
 @Data
 public class PersonRepositories {
+
+    @Value("${limit}")
+    private int limit;
 
     private static LinkedHashMap<Long, Person> personList;
 
@@ -38,12 +42,16 @@ public class PersonRepositories {
 
     public List<PersonDTO> getAllPerson(){
         List<PersonDTO> persons = new ArrayList<PersonDTO>();
+        int count = 0;
 
         for (Map.Entry<Long, Person> pl : personList.entrySet()) {
 
             PersonDTO personDTO = PersonDTO.from(pl.getValue());
             personDTO.setId(pl.getKey());
             persons.add(personDTO);
+            count++;
+            if (count == limit)
+                break;
         }
 
         return persons;

@@ -23,13 +23,17 @@ public class PersonController {
 
     @PostMapping
     public ResponseEntity<PersonDTO> addPerson(@RequestBody final Person person){
-//        personService.addPerson(person);
         return new ResponseEntity<PersonDTO>(personService.addPerson(person), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<PersonDTO>> getAllPerson(){
-        return new ResponseEntity<List<PersonDTO>>( personService.getAllPerson(), HttpStatus.OK);
+    public ResponseEntity<List<PersonDTO>> getAllPerson(@RequestParam(value = "query", required = false) String query){
+        if (query != null){
+            return new ResponseEntity<List<PersonDTO>>( personService.getQueryPerson(query), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<PersonDTO>>( personService.getAllPerson(), HttpStatus.OK);
+        }
+
     }
 
     @GetMapping(value = "{id}")
@@ -48,11 +52,4 @@ public class PersonController {
         personService.deletePerson(id);
         return new ResponseEntity( HttpStatus.OK);
     }
-
-//    @GetMapping(value = "person")
-//    public ResponseEntity<PersonDTO> getQueryPerson(@RequestParam(value = "query") String query ){
-////        personService.deletePerson(id);
-//        return new ResponseEntity( HttpStatus.OK);
-//    }
-
 }

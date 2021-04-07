@@ -2,16 +2,21 @@ package ru.shein.dmitriy.handbook.service;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.shein.dmitriy.handbook.entity.Person;
 import ru.shein.dmitriy.handbook.dto.PersonDTO;
 import ru.shein.dmitriy.handbook.repositories.PersonRepositories;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 @Data
 public class PersonService {
+
+
 
     private PersonRepositories personRepositories;
 
@@ -40,5 +45,24 @@ public class PersonService {
 
     public void updatePerson(Person person, Long id){
         personRepositories.setPerson(person, id);
+    }
+
+    public List<PersonDTO> getQueryPerson(String query) {
+        List<PersonDTO> personDTO = new ArrayList<>();
+
+        if (Pattern.matches("[a-zA-Z]+", query)) {
+            for (PersonDTO pdto : personRepositories.getAllPerson()) {
+               if ( pdto.getTitle().toLowerCase().startsWith(query.toLowerCase())){
+                   personDTO.add(pdto);
+               }
+            }
+        } else {
+            for (PersonDTO pdto : personRepositories.getAllPerson()) {
+                if ( pdto.getPhone().endsWith(query)){
+                    personDTO.add(pdto);
+                }
+            }
+        }
+        return personDTO;
     }
 }

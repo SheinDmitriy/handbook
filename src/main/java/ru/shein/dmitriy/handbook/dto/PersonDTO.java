@@ -2,7 +2,6 @@ package ru.shein.dmitriy.handbook.dto;
 
 import lombok.Data;
 import ru.shein.dmitriy.handbook.entity.Person;
-import ru.shein.dmitriy.handbook.repositories.PersonRepositories;
 
 @Data
 public class PersonDTO {
