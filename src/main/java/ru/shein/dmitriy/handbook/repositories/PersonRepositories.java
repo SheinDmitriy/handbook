@@ -35,6 +35,8 @@ public class PersonRepositories {
     }
 
     public PersonDTO getPerson(Long id){
+        if (personList.get(id) == null)
+            throw new NullPointerException();
         PersonDTO personDTO = PersonDTO.from(personList.get(id));
         personDTO.setId(id);
         return personDTO;
@@ -67,10 +69,14 @@ public class PersonRepositories {
     }
 
     public void setPerson(Person person, Long id){
+        if (personList.get(id) == null)
+            throw new NullPointerException();
         personList.put(id, person);
     }
 
     public void delete(Long id){
+        if (personList.get(id) == null)
+            throw new NullPointerException();
         personList.remove(id);
     }
 

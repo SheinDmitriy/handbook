@@ -33,7 +33,6 @@ public class PersonController {
         } else {
             return new ResponseEntity<List<PersonDTO>>( personService.getAllPerson(), HttpStatus.OK);
         }
-
     }
 
     @GetMapping(value = "{id}")

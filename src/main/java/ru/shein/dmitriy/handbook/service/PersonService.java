@@ -36,6 +36,7 @@ public class PersonService {
     }
 
     public void deletePerson(Long id){
+
         personRepositories.delete(id);
     }
 
