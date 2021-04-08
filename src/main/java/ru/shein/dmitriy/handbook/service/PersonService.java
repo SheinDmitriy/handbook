@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.shein.dmitriy.handbook.entity.Person;
 import ru.shein.dmitriy.handbook.dto.PersonDTO;
+import ru.shein.dmitriy.handbook.exception.PersonNotFoundException;
 import ru.shein.dmitriy.handbook.repositories.PersonRepositories;
 
 import java.util.ArrayList;
@@ -27,20 +28,26 @@ public class PersonService {
     }
 
     public List<PersonDTO> getAllPerson(){
-
         return personRepositories.getAllPerson();
     }
 
     public PersonDTO getPerson(Long id){
-        return personRepositories.getPerson(id);
+        if (personRepositories.getPerson(id) == null)
+            throw new PersonNotFoundException();
+        PersonDTO personDTO = PersonDTO.from(PersonRepositories.getPerson(id));
+        personDTO.setId(id);
+        return personDTO;
     }
 
     public void deletePerson(Long id){
-
+        if (personRepositories.getPerson(id) == null)
+            throw new PersonNotFoundException();
         personRepositories.delete(id);
     }
 
     public void updatePerson(Person person, Long id){
+        if (personRepositories.getPerson(id) == null)
+            throw new PersonNotFoundException();
         personRepositories.setPerson(person, id);
     }
 
@@ -61,7 +68,7 @@ public class PersonService {
             }
         }
         if (personDTO.size() == 0)
-            throw new NullPointerException();
+            throw new PersonNotFoundException();
         return personDTO;
     }
 }

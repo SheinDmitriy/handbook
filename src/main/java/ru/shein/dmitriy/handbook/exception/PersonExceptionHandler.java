@@ -9,8 +9,8 @@ import ru.shein.dmitriy.handbook.entity.Response;
 @ControllerAdvice
 public class PersonExceptionHandler {
 
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<Response> PersonNotFound(NullPointerException e){
+    @ExceptionHandler(PersonNotFoundException.class)
+    public ResponseEntity<Response> PersonNotFound(){
         Response response = new Response("Person not found");
         return new ResponseEntity<Response>(response, HttpStatus.BAD_REQUEST);
     }

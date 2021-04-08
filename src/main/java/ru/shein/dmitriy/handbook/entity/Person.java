@@ -21,7 +21,7 @@ public class Person {
 
     private String address;
 
-    public static Person from(PersonDTO personDTO){
+    public Person from(PersonDTO personDTO){
         Person person = new Person();
         person.setPhone(personDTO.getPhone());
         person.setAddress(personDTO.getAddress());

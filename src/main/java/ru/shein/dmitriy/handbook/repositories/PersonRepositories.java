@@ -34,12 +34,8 @@ public class PersonRepositories {
         personList.put(3L, person3);
     }
 
-    public PersonDTO getPerson(Long id){
-        if (personList.get(id) == null)
-            throw new NullPointerException();
-        PersonDTO personDTO = PersonDTO.from(personList.get(id));
-        personDTO.setId(id);
-        return personDTO;
+    public static Person getPerson(Long id){
+        return personList.get(id);
     }
 
     public List<PersonDTO> getAllPerson(){
@@ -47,7 +43,6 @@ public class PersonRepositories {
         int count = 0;
 
         for (Map.Entry<Long, Person> pl : personList.entrySet()) {
-
             PersonDTO personDTO = PersonDTO.from(pl.getValue());
             personDTO.setId(pl.getKey());
             persons.add(personDTO);
@@ -55,7 +50,6 @@ public class PersonRepositories {
             if (count == limit)
                 break;
         }
-
         return persons;
     }
 
@@ -64,19 +58,14 @@ public class PersonRepositories {
         personList.put(key, person);
         PersonDTO personDTO = PersonDTO.from(person);
         personDTO.setId(key);
-
         return personDTO;
     }
 
     public void setPerson(Person person, Long id){
-        if (personList.get(id) == null)
-            throw new NullPointerException();
         personList.put(id, person);
     }
 
     public void delete(Long id){
-        if (personList.get(id) == null)
-            throw new NullPointerException();
         personList.remove(id);
     }
 
