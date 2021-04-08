@@ -60,6 +60,8 @@ public class PersonService {
                 }
             }
         }
+        if (personDTO.size() == 0)
+            throw new NullPointerException();
         return personDTO;
     }
 }
