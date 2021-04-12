@@ -16,12 +16,12 @@ public class PersonRepositories {
     @Value("${limit}")
     private int limit;
 
-    private static IdentityHashMap<Long, Person> personList;
+    private static HashMap<Long, Person> personList;
     private static Long idInMap;
 
     @Autowired
     public PersonRepositories() {
-        personList = new IdentityHashMap<>();
+        personList = new HashMap<>();
 
         Person person1 = new Person("Dima", "+1111111", "Perm");
         Person person2 = new Person("Sasha", "+2222222", "Perm");
