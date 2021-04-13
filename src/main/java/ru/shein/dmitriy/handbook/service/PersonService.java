@@ -54,19 +54,12 @@ public class PersonService {
     public List<PersonDTO> getQueryPerson(String query) {
         List<PersonDTO> personDTO = new ArrayList<>();
 
-        if (Pattern.matches("[a-zA-Z]+", query)) {
-            for (PersonDTO pdto : personRepositories.getAllPerson()) {
-               if ( pdto.getTitle().toLowerCase().startsWith(query.toLowerCase())){
-                   personDTO.add(pdto);
-               }
-            }
-        } else {
-            for (PersonDTO pdto : personRepositories.getAllPerson()) {
-                if ( pdto.getPhone().endsWith(query)){
-                    personDTO.add(pdto);
-                }
+        for (PersonDTO pdto : personRepositories.getAllPerson()) {
+            if ( pdto.getPhone().endsWith(query) || pdto.getTitle().toLowerCase().startsWith(query.toLowerCase())){
+                personDTO.add(pdto);
             }
         }
+
         if (personDTO.size() == 0)
             throw new PersonNotFoundException();
         return personDTO;

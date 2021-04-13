@@ -17,7 +17,7 @@ public class PersonRepositories {
     private int limit;
 
     private static HashMap<Long, Person> personList;
-    private static Long idInMap;
+    private static Long idInMap = 0L;
 
     @Autowired
     public PersonRepositories() {
