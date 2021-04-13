@@ -7,10 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.shein.dmitriy.handbook.entity.Person;
 import ru.shein.dmitriy.handbook.dto.PersonDTO;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 @Data
@@ -19,19 +16,20 @@ public class PersonRepositories {
     @Value("${limit}")
     private int limit;
 
-    private static LinkedHashMap<Long, Person> personList;
+    private static HashMap<Long, Person> personList;
+    private static Long idInMap;
 
     @Autowired
     public PersonRepositories() {
-        personList = new LinkedHashMap<>();
+        personList = new HashMap<>();
 
         Person person1 = new Person("Dima", "+1111111", "Perm");
         Person person2 = new Person("Sasha", "+2222222", "Perm");
         Person person3 = new Person("Marika", "+333333", "Ekaterinburg");
 
-        personList.put(1L, person1);
-        personList.put(2L, person2);
-        personList.put(3L, person3);
+        addPerson(person1);
+        addPerson(person2);
+        addPerson(person3);
     }
 
     public static Person getPerson(Long id){
@@ -54,7 +52,7 @@ public class PersonRepositories {
     }
 
     public PersonDTO addPerson(Person person){
-        Long key = getLastKey() + 1L;
+        Long key = ++idInMap;
         personList.put(key, person);
         PersonDTO personDTO = PersonDTO.from(person);
         personDTO.setId(key);
@@ -67,22 +65,5 @@ public class PersonRepositories {
 
     public void delete(Long id){
         personList.remove(id);
-    }
-
-    private Long getLastKey(){
-        int count = 1;
-
-        if(personList.size() == 0){
-            return 0L;
-        }
-
-        for (Map.Entry<Long, Person> pl : personList.entrySet()) {
-
-            if (count == personList.size()) {
-                return pl.getKey();
-            }
-            count++;
-        }
-        return null;
     }
 }
